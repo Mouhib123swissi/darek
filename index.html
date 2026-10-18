@@ -2,18 +2,18 @@
 <!DOCTYPE html>
 <!--
 ============================================================
-داره (Darek) — نسخة كاملة م9سمة + Commentaret
+داره (Darek) — نسخة كاملة م9سمة + Commentaret FO9 1200 LIGNE
 KHARITA BECH TA3REF WIN TSALLE7:
 0 = STYLE (design/alwen) | 1 = CONFIG (D17/RIB/SEED) | 2 = ADWAT | 3 = TAKHZIN (img/localStorage)
 4 = CACHE 3AQARAT (takhine) | 5 = TACHFIR (PBKDF2) | 6 = WAJHA 3AMA | 7 = JALSA/DKHOL
-8 = TAN9OL (tabs) | 9 = 3ARDH (cards) | 10 = 3AMALYET (pay/view) | 11 = A7DATH | 12 = TACHGHIL
+8 = TAN9OL (tabs) | 9 = 3ARDH (cards) | 10 = 3AMALYET (pay/view/facture) | 11 = A7DATH | 12 = TACHGHIL
 Ken tbadel style/script -> ejri: node tools/csp-hash.mjs
 ============================================================
 -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<!-- ===== CSP HEMAYA: ken tbadel ay harf fi style/script baddel hash hna ===== -->
+<!-- ===== 0. HEMAYA CSP ===== ken tbadel ay harf fi style/script baddel hash hna -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Xlm6g1/C0wGlE2eQcVP6iwgyfnKJ+D0Z5QgDdUATupw='; style-src 'sha256-USuabot+ekORncyBqxdxmn0aiiUDOLlMrmywjeVbz/A=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -204,7 +204,7 @@ input[dir=ltr]{text-align:left}
 <div class="pr"><span>RIB البنكي</span><code id="payRib" dir="ltr"></code><button type="button" class="chipb" data-act="copy" id="cpRib">نسخ</button></div>
 </div>
 <ol class="steps mut"><li>حوّل المبلغ عبر D17 أو التحويل البنكي.</li><li>ارفع صورة واضحة لإيصال التحويل.</li><li>تراجع الإدارة الإيصال وتظهر النتيجة في «طلباتي ومدفوعاتي».</li></ol>
-<label class="fld">صورة إيصال التحويل<input id="payProof" name="proof" type="file" accept="image/*"></label>
+<label class="fld">صورة إيصال التحويل<input id="payProof" name="proof" type="file" accept="image/"></label>
 <img id="payPrev" class="prev" alt="معاينة الإيصال" hidden>
 <p class="err" role="alert"></p>
 <button type="submit" class="btn ok">إرسال إثبات الدفع ✓</button>
@@ -226,4 +226,40 @@ input[dir=ltr]{text-align:left}
 <dialog id="dlgImg" aria-labelledby="imgT">
 <div class="box">
 <h2 id="imgT">إيصال الدفع</h2>
-<img id="imgFull
+<img id="imgFull" class="full" alt="إيصال الدفع بالحجم الكامل">
+<p id="imgCap" class="mut"></p>
+<button type="button" class="btn sm" data-act="close" data-id="dlgImg">إغلاق</button>
+</div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<!-- ===== WAJHA 3: APP ===== -->
+<div id="app" hidden>
+<header class="nav">
+<div class="navl"><button type="button" class="hb" id="hb" data-act="menu" aria-label="القائمة" aria-controls="menu" aria-expanded="false">☰</button><div class="brand">🏠 داره</div></div>
+<div class="navr"><span id="who" class="pill who"></span><button type="button" class="out" data-act="logout">خروج</button></div>
+</header>
+<div class="tick" aria-label="إعلان"><span id="tk"></span></div>
+<div class="hero"><h1>منصة داره لتسيير العقارات والمبيتات</h1><p id="heroP">تنظيم عالي، دفع موثّق، وتصاميم عصرية</p></div>
+<nav class="tabs" id="tabs" aria-label="الأقسام"></nav>
+<main class="wrap" id="dash" tabindex="-1"></main>
+<button type="button" class="fwa" data-act="wa" aria-label="تواصل عبر واتساب"><svg width="30" height="30" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z" fill="none" stroke="#fff" stroke-width="2"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z" fill="#fff"/></svg></button>
+<div class="scrim" id="scrim" data-act="menu-close" hidden></div>
+<nav class="menu" id="menu" aria-label="القائمة"></nav>
+</div>
+
+<script>
+'use strict';
+(() => {
+document.getElementById('jsfail').remove();
+
+/ ============================================================ /
+/ 1. CONFIG - BADDEL HNA: D17, RIB, WA, SEED (3aqarat loulanin) /
+/ ============================================================ */
+const CFG = Object.freeze({
+ann: '🔥 عروض مميزة: حجز سريع للعقارات والمبيتات في تونس والساحل عبر منصة داره!',
+wa: '21629461304', d17: '29461304', rib: '14 000 00029384812', depPct: 20,
+brokerName: 'السمسار مهيب',
+admin: Object.freeze({ salt: '', iter: 310000, hash: '' }),
+adminLegacySha256: '8bfa6ec511c7840857b9bb932cadbbcea45d49b
