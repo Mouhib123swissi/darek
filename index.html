@@ -1,0 +1,229 @@
+```html
+<!DOCTYPE html>
+<!--
+============================================================
+داره (Darek) — نسخة كاملة م9سمة + Commentaret
+KHARITA BECH TA3REF WIN TSALLE7:
+0 = STYLE (design/alwen) | 1 = CONFIG (D17/RIB/SEED) | 2 = ADWAT | 3 = TAKHZIN (img/localStorage)
+4 = CACHE 3AQARAT (takhine) | 5 = TACHFIR (PBKDF2) | 6 = WAJHA 3AMA | 7 = JALSA/DKHOL
+8 = TAN9OL (tabs) | 9 = 3ARDH (cards) | 10 = 3AMALYET (pay/view) | 11 = A7DATH | 12 = TACHGHIL
+Ken tbadel style/script -> ejri: node tools/csp-hash.mjs
+============================================================
+-->
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<!-- ===== CSP HEMAYA: ken tbadel ay harf fi style/script baddel hash hna ===== -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-Xlm6g1/C0wGlE2eQcVP6iwgyfnKJ+D0Z5QgDdUATupw='; style-src 'sha256-USuabot+ekORncyBqxdxmn0aiiUDOLlMrmywjeVbz/A=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="داره: ابحث عن مبيت أو شقة في تونس، اطلب معاينة، وادفع العربون بإثبات تحويل تؤكده الإدارة.">
+<meta name="theme-color" content="#c8102e">
+<meta name="color-scheme" content="light">
+<title>داره (Darek) – منصة العقارات والمبيتات في تونس</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23c8102e'/%3E%3Cpath d='M14 32 32 16l18 16v16a2 2 0 0 1-2 2H38V38H26v12H16a2 2 0 0 1-2-2z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/ ============================================================ /
+/ 0. STYLE - HNA TBADDEL DESIGN KOL: alwen, 7ajm, cards /
+/ :root = alwen site | .card = card 3aqar | .hero = bande rouge /
+/ FIX TAKHINE: content-visibility bech tsare3 site /
+/ ============================================================ /
+:root{--bg:#f8f9fa;--card:#fff;--ink:#1e293b;--mut:#5b6b80;--line:#e2e8f0;--red:#c8102e;--redd:#7a0a1d;--ok:#047857;--okb:#d1fae5;--warn:#b45309;--soft:#fff1f2;--wa:#25d366;--wad:#15803d;--no:#475569;
+--sh:0 4px 6px -1px rgba(0,0,0,.05),0 2px 4px -2px rgba(0,0,0,.05);--shl:0 12px 24px -4px rgba(0,0,0,.12);--sb:env(safe-area-inset-bottom,0px)}
+{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo','Segoe UI',Tahoma,sans-serif;line-height:1.6}
+h1,h2,h3{line-height:1.3}
+img{max-width:100%;height:auto}
+[hidden]{display:none!important}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.jsfail{position:fixed;inset:0 0 auto;z-index:99;background:var(--red);color:#fff;text-align:center;padding:12px;font-weight:700}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.6;cursor:not-allowed}
+:focus-visible{outline:3px solid #f59e0b;outline-offset:2px}
+.welcome{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px;background:linear-gradient(135deg,#fff1f2,#f8f9fa)}
+.welcome h1{font-size:clamp(24px,5vw,32px);font-weight:800;margin:0 0 8px;text-align:center;color:var(--red)}
+.welcome>p{color:var(--mut);margin:0 0 28px;text-align:center;font-size:16px}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;width:100%;max-width:850px}
+.role{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:24px;text-align:center;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;box-shadow:var(--sh);display:flex;flex-direction:column;align-items:center;gap:10px}
+.role:hover{border-color:var(--red);transform:translateY(-5px);box-shadow:var(--shl)}
+.role .ic{font-size:48px;line-height:1}.role h2{margin:0;font-size:19px}.role p{margin:0;font-size:13px;color:var(--mut);flex:1}
+.btn{background:var(--red);color:#fff;border:0;padding:10px 20px;border-radius:99px;font-weight:700;width:100%;text-decoration:none;display:inline-block;text-align:center}
+.btn.ok{background:var(--ok)}.btn.no{background:var(--no)}.btn.wa{background:var(--wad)}
+.btn.sm{width:auto;padding:6px 14px;font-size:12.5px}
+.link{background:none;border:0;color:var(--mut);margin-top:10px;padding:6px 10px}
+.out{border:1px solid var(--line);padding:4px 12px;border-radius:8px;background:#fff;color:var(--ink);font-weight:600;font-size:13px}
+dialog{border:0;padding:0;background:transparent;width:100%;max-width:min(480px,calc(100vw - 32px))}
+dialog::backdrop{background:rgba(15,23,42,.6);backdrop-filter:blur(4px)}
+.box{background:var(--card);border-radius:20px;padding:24px;box-shadow:var(--shl);text-align:center}
+.box h2{margin:0 0 12px;font-size:20px}
+.fld{display:block;text-align:right;font-size:12.5px;color:var(--mut);font-weight:600;margin-bottom:10px}
+.fld .opt{font-weight:400}
+input,select,textarea{width:100%;padding:10px 14px;margin-top:4px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:var(--ink);font-size:15px}
+input[type=file]{padding:8px;font-size:13px}
+textarea{min-height:96px;resize:vertical}
+input[dir=ltr]{text-align:left}
+.err{color:var(--red);font-size:13px;min-height:1.4em;margin:4px 0 8px;font-weight:600}
+.seg{display:flex;background:#f1f5f9;border-radius:99px;padding:4px;margin-bottom:14px}
+.seg button{flex:1;border:0;background:none;border-radius:99px;padding:7px;font-weight:700;color:var(--mut)}
+.seg button[aria-selected=true]{background:#fff;color:var(--red);box-shadow:var(--sh)}
+.paybox{background:var(--soft);padding:12px;border-radius:12px;font-size:13.5px;text-align:right;margin-bottom:10px;display:grid;gap:8px}
+.pr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pr>span{min-width:96px;font-weight:700}
+.pr code{background:#fff;border-radius:6px;padding:2px 8px;font-size:14px;letter-spacing:.5px}
+.amt{color:var(--red);font-size:18px;font-weight:800}
+.steps{text-align:right;font-size:12.5px;margin:0 0 12px;padding-inline-start:20px}
+.prev{max-height:160px;border-radius:10px;margin:0 auto 8px;display:block;border:1px solid var(--line)}
+.slots{border:0;margin:0 0 4px;padding:0;text-align:right}
+.slot{display:flex;gap:10px;align-items:center;padding:10px 12px;margin-bottom:8px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer}
+.slot input{width:auto;margin:0;accent-color:var(--red)}
+.slot:has(input:checked){background:var(--soft);border-color:var(--red);font-weight:700}
+.full{max-height:72vh;width:auto;border-radius:12px;display:block;margin:0 auto 8px}
+#app{min-height:100vh}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 16px}
+.navl,.navr{display:flex;align-items:center;gap:10px;min-width:0}
+.brand{font-weight:800;font-size:21px;color:var(--red);white-space:nowrap}
+.who{max-width:42vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hb{background:none;border:1px solid var(--line);border-radius:8px;font-size:22px;line-height:1;padding:4px 11px;color:var(--ink)}
+.tick{background:var(--redd);color:#fff;overflow:hidden;white-space:nowrap;font-size:13px;height:32px;position:relative}
+.tick span{position:absolute;top:5px;left:0;animation:tk 28s linear infinite;will-change:transform}
+@keyframes tk{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
+.hero{padding:28px 20px;text-align:center;background:linear-gradient(135deg,var(--redd),var(--red));color:#fff}
+.hero h1{margin:0 0 4px;font-size:clamp(20px,4vw,26px);font-weight:800}.hero p{margin:0;opacity:.92}
+.tabs{display:none;gap:6px;justify-content:center;flex-wrap:wrap;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+.tabs button,.menu button{border:0;background:none;border-radius:10px;padding:8px 14px;font-weight:700;color:var(--ink)}
+.tabs button:hover,.tabs button.on,.menu button:hover,.menu button.on{background:var(--soft);color:var(--red)}
+.cnt{display:inline-block;min-width:20px;padding:0 6px;border-radius:99px;background:var(--red);color:#fff;font-size:11px;line-height:20px;text-align:center;margin-inline-start:4px}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 16px calc(96px + var(--sb))}
+.menu{position:fixed;top:0;bottom:0;right:0;width:280px;max-width:86vw;z-index:40;background:var(--card);border-radius:18px 0 0 18px;padding:14px;box-shadow:var(--shl);overflow:auto;transform:translateX(110%);transition:transform .25s,visibility .25s;visibility:hidden}
+.menu.open{transform:none;visibility:visible}
+.menu button{display:block;width:100%;text-align:right;margin-bottom:4px;padding:10px 14px}
+.menuh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.scrim{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:30}
+@media (min-width:960px){.tabs{display:flex}.hb{display:none}}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--sh);display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s;content-visibility:auto;contain-intrinsic-size:300px 350px}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shl)}
+.cover{aspect-ratio:2/1;position:relative;background:var(--soft)}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.badge{position:absolute;top:10px;right:10px;font-size:11.5px;font-weight:700;color:#fff;padding:4px 10px;border-radius:99px}
+.b-a{background:var(--ok)}.b-r{background:var(--no)}
+.body{padding:14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.body h3{margin:0;font-size:15px}
+.price{color:var(--red);font-weight:800;font-size:18px}
+.dist{background:var(--soft);color:var(--red);font-weight:700;font-size:12px;padding:3px 10px;border-radius:6px;width:fit-content}
+.mut{color:var(--mut);font-size:12.5px}
+.acts{display:flex;gap:6px;margin-top:auto;padding-top:10px;flex-wrap:wrap}
+.acts button{flex:1;padding:7px 6px;border-radius:8px;border:1px solid var(--line);background:#fff;font-weight:700;font-size:12px;white-space:nowrap}
+.acts .dep{background:var(--warn);color:#fff;border-color:var(--warn)}.acts .vw{background:var(--red);color:#fff;border-color:var(--red)}.acts .wa{background:var(--wad);color:#fff;border-color:var(--wad)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--sh);margin-bottom:16px}
+.panel h2{margin:0 0 10px;color:var(--red);font-size:16px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+.rowact{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.pill{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--red);white-space:nowrap}
+.pill.g{background:var(--okb);color:var(--ok)}.pill.x{background:#f1f5f9;color:var(--no)}.pill.w{background:#fef3c7;color:var(--warn)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--soft);border-radius:12px;padding:10px 12px}.stat b{display:block;font-size:22px;color:var(--red)}
+.filters{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.filters input,.filters select{width:auto;margin:0}
+.filters .q{flex:1;min-width:160px}.filters .mx{width:130px}
+.chipb{border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 12px;font-size:12.5px;font-weight:600}
+.empty{text-align:center;padding:28px 12px;color:var(--mut)}
+.chat{background:#f1f5f9;border-radius:12px;padding:12px;height:300px;overflow-y:auto;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+.msg{background:#fff;padding:8px 12px;border-radius:10px;max-width:80%;box-shadow:0 1px 2px rgba(0,0,0,.05);align-self:flex-end}
+.msg.me{background:var(--soft);align-self:flex-start}
+.txt{white-space:pre-wrap;overflow-wrap:anywhere}
+.chatf{display:flex;gap:8px}.chatf input{margin:0}
+.fr{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0 12px}
+.thumbbtn{border:0;padding:0;background:none;margin-top:6px;display:block}
+.thumb{width:120px;height:80px;object-fit:cover;border-radius:8px;display:block;border:1px solid var(--line)}
+.code{direction:ltr;text-align:left;background:#0f172a;color:#e2e8f0;border-radius:10px;padding:12px;font-size:12px;overflow-x:auto;white-space:pre-wrap;word-break:break-all}
+.note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:12px}
+.toast{position:fixed;left:50%;bottom:calc(92px + var(--sb));transform:translateX(-50%);z-index:60;background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;font-size:14px;max-width:90vw;text-align:center;box-shadow:var(--shl)}
+.toast.bad{background:var(--red)}
+.fwa{position:fixed;left:16px;bottom:calc(16px + var(--sb));z-index:35;width:58px;height:58px;border-radius:50%;border:0;background:var(--wa);display:flex;align-items:center;justify-content:center;animation:pu 2.2s infinite}
+@keyframes pu{0%{box-shadow:0 0 0 0 rgba(37,211,102,.55)}70%{box-shadow:0 0 0 16px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+@media (prefers-reduced-motion:reduce){,::before,::after{transition:none!important;animation:none!important}.tick span{position:static;display:block;text-align:center;padding-top:5px}}
+</style>
+</head>
+<body>
+<div class="jsfail" id="jsfail" role="alert">تعذّر تشغيل المنصة: JavaScript لا يعمل هنا. افتح الملف في متصفح (Safari أو Chrome) عبر رابط http(s)، لا في معاينة الملفات. إن استمر المشكل، حدّث بصمة CSP في أعلى الملف.</div>
+
+<!-- ===== WAJHA 1: ISTI9BEL ===== -->
+<main class="welcome" id="w">
+<h1>منصة داره (Darek) للعقارات والمبيتات</h1>
+<p>اختر صفتك للدخول: تصفح، حجز، معاينة، وتواصل مباشر</p>
+<div class="roles">
+<div class="role" data-act="role" data-id="tenant"><div class="ic" aria-hidden="true">🧑‍🎓</div><h2>مكتري / طالب</h2><p>بحث، طلب معاينة، دفع العربون بإثبات تحويل، ثم فضاء «داري» بعد تأكيد الحجز.</p><button type="button" class="btn">دخول كمكتري</button></div>
+<div class="role" data-act="role" data-id="landlord"><div class="ic" aria-hidden="true">🏠</div><h2>مالك عقار</h2><p>أضف عقاراتك، تابع المداخيل، وراسل مكتريك وتابع فواتيرهم وتشكياتهم.</p><button type="button" class="btn">دخول كمالك</button></div>
+<div class="role" data-act="role" data-id="broker"><div class="ic" aria-hidden="true">⚡</div><h2>سمسار / إدارة</h2><p>مراجعة العقارات، المعاينات، إثباتات الدفع والرسائل.</p><button type="button" class="btn">دخول الإدارة</button></div>
+</div>
+</main>
+
+<!-- ===== WAJHA 2: POPUPS ===== -->
+<dialog id="dlgAuth" aria-labelledby="authT">
+<form id="fAuth" class="box" novalidate>
+<h2 id="authT">الدخول</h2>
+<div class="seg" role="tablist" aria-label="نوع العملية">
+<button type="button" role="tab" data-act="mode" data-id="login" aria-selected="true">تسجيل الدخول</button>
+<button type="button" role="tab" data-act="mode" data-id="register" aria-selected="false">حساب جديد</button>
+</div>
+<div id="regOnly" hidden>
+<label class="fld">الاسم الكامل<input name="fullname" autocomplete="name" maxlength="60"></label>
+<label class="fld">رقم الهاتف <span class="opt">(اختياري، 8 أرقام)</span><input name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="8" dir="ltr"></label>
+</div>
+<label class="fld">البريد الإلكتروني<input name="email" type="email" autocomplete="email" maxlength="80" dir="ltr"></label>
+<label class="fld">كلمة السر <span class="opt">(8 أحرف على الأقل)</span><input name="pass" type="password" autocomplete="current-password" maxlength="128" dir="ltr"></label>
+<p class="err" role="alert"></p>
+<button type="submit" class="btn" id="authBtn">دخول</button>
+<button type="button" class="link" data-act="close" data-id="dlgAuth">إلغاء</button>
+</form>
+</dialog>
+
+<dialog id="dlgPin" aria-labelledby="pinT">
+<form id="fPin" class="box" novalidate>
+<h2 id="pinT">دخول الإدارة 🔒</h2>
+<label class="fld">الرمز السري<input name="pin" type="password" autocomplete="current-password" maxlength="128" dir="ltr"></label>
+<p class="err" role="alert"></p>
+<button type="submit" class="btn">دخول</button>
+<button type="button" class="link" data-act="close" data-id="dlgPin">إلغاء</button>
+</form>
+</dialog>
+
+<dialog id="dlgPay" aria-labelledby="payT">
+<form id="fPay" class="box" novalidate>
+<h2 id="payT">💳 الدفع عبر D17 أو تحويل بنكي</h2>
+<p id="payFor" class="mut"></p>
+<div class="paybox">
+<div class="pr"><span>المبلغ المطلوب</span><b class="amt"><span id="payAmt"></span> د.ت</b></div>
+<div class="pr"><span>D17</span><code id="payD17" dir="ltr"></code><button type="button" class="chipb" data-act="copy" id="cpD17">نسخ</button></div>
+<div class="pr"><span>RIB البنكي</span><code id="payRib" dir="ltr"></code><button type="button" class="chipb" data-act="copy" id="cpRib">نسخ</button></div>
+</div>
+<ol class="steps mut"><li>حوّل المبلغ عبر D17 أو التحويل البنكي.</li><li>ارفع صورة واضحة لإيصال التحويل.</li><li>تراجع الإدارة الإيصال وتظهر النتيجة في «طلباتي ومدفوعاتي».</li></ol>
+<label class="fld">صورة إيصال التحويل<input id="payProof" name="proof" type="file" accept="image/*"></label>
+<img id="payPrev" class="prev" alt="معاينة الإيصال" hidden>
+<p class="err" role="alert"></p>
+<button type="submit" class="btn ok">إرسال إثبات الدفع ✓</button>
+<button type="button" class="link" data-act="close" data-id="dlgPay">إلغاء</button>
+</form>
+</dialog>
+
+<dialog id="dlgView" aria-labelledby="viewT">
+<form id="fView" class="box" novalidate>
+<h2 id="viewT">📅 طلب معاينة</h2>
+<p id="viewFor" class="mut"></p>
+<fieldset class="slots" id="slots"><legend class="sr">اختر موعداً</legend></fieldset>
+<p class="err" role="alert"></p>
+<button type="submit" class="btn">تأكيد طلب المعاينة</button>
+<button type="button" class="link" data-act="close" data-id="dlgView">إلغاء</button>
+</form>
+</dialog>
+
+<dialog id="dlgImg" aria-labelledby="imgT">
+<div class="box">
+<h2 id="imgT">إيصال الدفع</h2>
+<img id="imgFull
